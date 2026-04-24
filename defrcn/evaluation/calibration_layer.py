@@ -8,8 +8,8 @@ import numpy as np
 from detectron2.structures import ImageList
 from detectron2.modeling.poolers import ROIPooler
 from sklearn.metrics.pairwise import cosine_similarity
-from defrcn.dataloader import build_detection_test_loader
-from defrcn.evaluation.archs import resnet101
+from FeaSynthFSOD.dataloader import build_detection_test_loader
+from FeaSynthFSOD.evaluation.archs import resnet101
 
 logger = logging.getLogger(__name__)
 

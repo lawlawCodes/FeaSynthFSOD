@@ -1,0 +1,31 @@
+_BASE_: "../Base-RCNN.yaml"
+MODEL:
+  WEIGHTS: "/Path/to/ImageNet/Pretrain/Weight"
+  MASK_ON: False
+  BACKBONE:
+    FREEZE: True
+  RESNETS:
+    DEPTH: 101
+  RPN:
+    ENABLE_DECOUPLE: True
+    FREEZE: True
+    BACKWARD_SCALE: 0.0
+  ROI_HEADS:
+    NUM_CLASSES: 60
+    ENABLE_DECOUPLE: True
+    BACKWARD_SCALE: 0.0
+    FREEZE_FEAT: True
+GEN_MODEL:
+  SEMANTIC_DIM: 512
+  TRAINING: True
+  BETA: 0.005
+DATASETS:
+  TRAIN: ('coco14_trainval_base',)
+  TEST: ('coco14_test_base',)
+SOLVER:
+  IMS_PER_BATCH: 16
+  BASE_LR: 0.001
+  STEPS: (53900, 69300)
+  MAX_ITER: 77000 
+  CHECKPOINT_PERIOD: 11000
+OUTPUT_DIR: "/Path/to/Output/Dir"

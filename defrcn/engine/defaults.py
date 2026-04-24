@@ -13,13 +13,13 @@ from detectron2.utils.logger import setup_logger
 from detectron2.engine import hooks, SimpleTrainer
 from detectron2.utils.collect_env import collect_env_info
 from detectron2.utils.events import TensorboardXWriter, CommonMetricPrinter, JSONWriter
-from defrcn.data import *
-from defrcn.modeling import build_model
-from defrcn.engine.hooks import EvalHookDeFRCN
-from defrcn.checkpoint import DetectionCheckpointer
-from defrcn.solver import build_lr_scheduler, build_optimizer
-from defrcn.evaluation import DatasetEvaluator, inference_on_dataset, print_csv_format, verify_results
-from defrcn.dataloader import MetadataCatalog, build_detection_test_loader, build_detection_train_loader
+from FeaSynthFSOD.data import *
+from FeaSynthFSOD.modeling import build_model
+from FeaSynthFSOD.engine.hooks import EvalHookDeFRCN
+from FeaSynthFSOD.checkpoint import DetectionCheckpointer
+from FeaSynthFSOD.solver import build_lr_scheduler, build_optimizer
+from FeaSynthFSOD.evaluation import DatasetEvaluator, inference_on_dataset, print_csv_format, verify_results
+from FeaSynthFSOD.dataloader import MetadataCatalog, build_detection_test_loader, build_detection_train_loader
 
 
 __all__ = [

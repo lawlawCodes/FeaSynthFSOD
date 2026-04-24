@@ -17,7 +17,7 @@ from detectron2.utils import comm as comm
 from detectron2.data import MetadataCatalog
 from detectron2.utils.logger import create_small_table
 from detectron2.data.datasets.coco import convert_to_coco_json
-from defrcn.evaluation.evaluator import DatasetEvaluator
+from FeaSynthFSOD.evaluation.evaluator import DatasetEvaluator
 
 
 class COCOEvaluator(DatasetEvaluator):

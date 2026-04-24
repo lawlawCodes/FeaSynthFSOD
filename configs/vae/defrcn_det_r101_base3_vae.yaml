@@ -1,0 +1,35 @@
+_BASE_: "../Base-RCNN.yaml"
+MODEL:
+  WEIGHTS: "/Path/to/ImageNet/Pretrain/Weight"
+  MASK_ON: False
+  BACKBONE:
+    FREEZE: True
+  RESNETS:
+    DEPTH: 101
+  RPN:
+    ENABLE_DECOUPLE: True
+    BACKWARD_SCALE: 0.0
+    FREEZE: True
+  ROI_HEADS:
+    NUM_CLASSES: 15
+    ENABLE_DECOUPLE: True
+    BACKWARD_SCALE: 0.0
+    FREEZE_FEAT: True
+GEN_MODEL:
+  SEMANTIC_DIM: 512
+  TRAINING: True
+  BETA: 0.005
+INPUT:
+  MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
+  MIN_SIZE_TEST: 800
+DATASETS:
+  TRAIN: ('voc_2007_trainval_base3', 'voc_2012_trainval_base3')
+  TEST: ('voc_2007_test_base3',)
+SOLVER:
+  IMS_PER_BATCH: 16
+  BASE_LR: 0.001
+  STEPS: (10000, 13300)
+  MAX_ITER: 15000
+  CHECKPOINT_PERIOD: 30000
+  WARMUP_ITERS: 100
+OUTPUT_DIR: "/Path/to/Output/Dir"
