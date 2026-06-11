@@ -17,9 +17,9 @@ MODEL:
     ENABLE_DECOUPLE: True
     BACKWARD_SCALE: 0.01
 GEN_MODEL:
-  SEMANTIC_DIM: 512
   INFERENCE: True
-  TOP_K: 4
+  TOP_K: 3
+  ITER: 2000
 DATASETS:
   TRAIN: ('coco14_trainval_all_10shot_seedx',)
   TEST: ('coco14_test_all',)
