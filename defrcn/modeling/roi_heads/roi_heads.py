@@ -470,6 +470,8 @@ class SynFeatRes5ROIHeads(Res5ROIHeads):
                     pos_features = feature_pooled[pos_mask]
                     pos_labels = outputs.gt_classes[pos_mask]
                     self.update_memory(pos_features, pos_labels, self.queue_s)
+
+                    
             
             return [], losses
         else:
@@ -514,9 +516,6 @@ class SynFeatRes5ROIHeads(Res5ROIHeads):
             c = int(c)
             mask = gt_classes_fg == c
             self._dequeue_and_enqueue(features_fg[mask], c, queue)
-
-
-
 
 
 @ROI_HEADS_REGISTRY.register()
