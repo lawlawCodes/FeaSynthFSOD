@@ -4,7 +4,7 @@ import clip
 import torch.nn.functional as F
 import numpy as np
 
-from FeaSynthFSOD.data.builtin_meta import (
+from defrcn.data.builtin_meta import (
     COCO_CATEGORIES,
     COCO_NOVEL_CATEGORIES,
     PASCAL_VOC_ALL_CATEGORIES,
@@ -15,19 +15,19 @@ from FeaSynthFSOD.data.builtin_meta import (
 import ast
 import argparse
 
-rootPath = "text_embeddings/CLIP/"
+rootPath = "side_information/CLIP/"
 
 parser = argparse.ArgumentParser(description="")
 parser.add_argument('--backbone', default='ViT-B/16', help='CLIP backbone')
 parser.add_argument('--device', default='cuda:0', help='cpu/cuda:x')
 
 
-def extract_text_embeddings(dataset, model, device):
+def extract_class_embeddings(dataset, model, device):
 
     classes = []
 
     if 'voc' in dataset:
-        with open(f"text_descriptions/voc.txt", "r", encoding="utf-8") as f:
+        with open(f"side_information/voc_descriptions_v3.txt", "r", encoding="utf-8") as f:
             txt_content = f.read()
             category_descriptions = ast.literal_eval(txt_content)
 
@@ -41,7 +41,7 @@ def extract_text_embeddings(dataset, model, device):
         dataset = ""
 
     if 'coco' in dataset:
-        with open(f"text_descriptions/coco.txt", "r", encoding="utf-8") as f:
+        with open(f"side_information/coco_descriptions_v2.txt", "r", encoding="utf-8") as f:
             txt_content = f.read()
             category_descriptions = ast.literal_eval(txt_content)
         all_classes = [k["name"] for k in COCO_CATEGORIES if k["isthing"] == 1]
@@ -69,27 +69,27 @@ def extract_text_embeddings(dataset, model, device):
     return classes, torch.stack(category_text_features, dim=0).to(device)
 
 
-def load_text_embeddings(dataset, device):
+def load_class_embeddings(dataset, device):
 
     if 'voc' in dataset:
         split = int(__import__("re").search(r"(?:base|all)(\d+)", dataset).group(1))
 
         if 'base' in dataset:
-            loadpath = f"{rootPath}voc_base{split}_text_embeddings.npy"
+            loadpath = f"{rootPath}voc_base{split}_class_embeddings.npy"
         if 'novel' in dataset:
-            loadpath = f"{rootPath}voc_novel{split}_text_embeddings.npy"
+            loadpath = f"{rootPath}voc_novel{split}_class_embeddings.npy"
         if 'all' in dataset:
-            loadpath = f"{rootPath}voc_all{split}_text_embeddings.npy"
+            loadpath = f"{rootPath}voc_all{split}_class_embeddings.npy"
 
         dataset = ""
 
     if 'coco' in dataset:
         if 'base' in dataset:
-            loadpath = f"{rootPath}coco_base_text_embeddings.npy"
+            loadpath = f"{rootPath}coco_base_class_embeddings.npy"
         if 'novel' in dataset:
-            loadpath = f"{rootPath}coco_novel_text_embeddings.npy"
+            loadpath = f"{rootPath}coco_novel_class_embeddings.npy"
         if 'all' in dataset:
-            loadpath = f"{rootPath}coco_all_text_embeddings.npy"
+            loadpath = f"{rootPath}coco_all_class_embeddings.npy"
 
         dataset = ""
 
@@ -104,21 +104,21 @@ def main():
     model.eval()
 
     dataset_dict = [
-                    "voc_all1",
-                    "voc_all2",
-                    "voc_all3",
-                    "voc_base1",
-                    "voc_base2",
-                    "voc_base3",
+                    # "voc_all1",
+                    # "voc_all2",
+                    # "voc_all3",
+                    # "voc_base1",
+                    # "voc_base2",
+                    # "voc_base3",
                     "coco_base",
                     "coco_all"
                     ]
 
     for dataset in dataset_dict:
 
-        classnames, class_embeddings = extract_text_embeddings(dataset, model, device)
+        classnames, class_embeddings = extract_class_embeddings(dataset, model, device)
 
-        save_path = f"{rootPath}{dataset}_text_embeddings.npy"
+        save_path = f"{rootPath}{dataset}_class_embeddings.npy"
 
         np.save(save_path, class_embeddings.cpu().numpy())
 
